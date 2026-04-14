@@ -14,7 +14,7 @@ interface ScoreRingProps {
 
 export function ScoreRing({
   score,
-  size = 160,
+  size = 128,
   strokeWidth = 8,
   animate = true,
 }: ScoreRingProps) {
@@ -67,10 +67,10 @@ export function ScoreRing({
         />
       </svg>
       <div className="absolute inset-0 flex flex-col items-center justify-center">
-        <span className="text-4xl font-bold tabular-nums" style={{ color }}>
+        <span className="text-3xl sm:text-4xl font-bold tabular-nums" style={{ color }}>
           {displayScore}
         </span>
-        <span className="text-xs t-text-tertiary mt-0.5">{t("report.outOf")}</span>
+        <span className="text-[10px] sm:text-xs t-text-tertiary mt-0.5">{t("report.outOf")}</span>
       </div>
     </div>
   );

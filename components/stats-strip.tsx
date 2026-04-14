@@ -45,15 +45,15 @@ export function StatsStrip() {
   ];
 
   return (
-    <section className="py-16 px-6">
+    <section className="py-10 sm:py-16 px-4 sm:px-6">
       <motion.div
         initial={{ opacity: 0 }}
         whileInView={{ opacity: 1 }}
         viewport={{ once: true }}
         transition={{ duration: 0.5 }}
-        className="mx-auto max-w-4xl rounded-2xl t-card p-8"
+        className="mx-auto max-w-4xl rounded-2xl t-card p-5 sm:p-8"
       >
-        <div className="grid grid-cols-2 md:grid-cols-4 gap-8">
+        <div className="grid grid-cols-2 md:grid-cols-4 gap-4 sm:gap-8">
           {stats.map((stat) => (
             <div key={stat.label} className="text-center">
               <div className="text-3xl font-bold t-text mb-1">

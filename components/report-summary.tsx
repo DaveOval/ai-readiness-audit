@@ -32,25 +32,25 @@ export function ReportSummary({ data }: ReportSummaryProps) {
         transition={{ duration: 0.5 }}
         className="rounded-2xl t-card p-8 sm:p-10"
       >
-        <div className="flex items-center gap-2 text-xs t-text-tertiary mb-6">
-          <ExternalLink className="h-3 w-3" />
+        <div className="flex flex-wrap items-center gap-x-2 gap-y-1 text-xs t-text-tertiary mb-6">
+          <ExternalLink className="h-3 w-3 shrink-0" aria-hidden="true" />
           <a
             href={data.meta.url}
             target="_blank"
             rel="noopener noreferrer"
-            className="hover:opacity-70 transition-opacity truncate"
+            className="hover:opacity-70 transition-opacity truncate min-w-0 max-w-[60vw] sm:max-w-none"
           >
             {getDisplayUrl(data.meta.url)}
           </a>
           <span className="t-text-muted">&middot;</span>
-          <span>
+          <span className="shrink-0">
             {new Date(data.meta.fetchedAt).toLocaleDateString(
               locale === "es" ? "es-ES" : "en-US",
               { month: "short", day: "numeric", year: "numeric" }
             )}
           </span>
           <span className="t-text-muted">&middot;</span>
-          <span>{data.meta.responseTimeMs}ms</span>
+          <span className="shrink-0">{data.meta.responseTimeMs}ms</span>
         </div>
 
         <div className="flex flex-col sm:flex-row items-center gap-8">
@@ -69,7 +69,7 @@ export function ReportSummary({ data }: ReportSummaryProps) {
         initial={{ opacity: 0, y: 16 }}
         animate={{ opacity: 1, y: 0 }}
         transition={{ duration: 0.5, delay: 1 }}
-        className="rounded-2xl t-card p-8 text-center"
+        className="rounded-2xl t-card p-6 sm:p-8 text-center"
       >
         <h3 className="text-lg font-semibold t-text mb-2">{t("report.auditAnother")}</h3>
         <p className="text-sm t-text-tertiary mb-6 max-w-md mx-auto">

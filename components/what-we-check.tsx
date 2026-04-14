@@ -34,9 +34,9 @@ export function WhatWeCheck() {
   ];
 
   return (
-    <section id="how-it-works" className="relative py-24 px-6">
+    <section id="how-it-works" className="relative py-12 sm:py-24 px-4 sm:px-6">
       <div className="mx-auto max-w-6xl">
-        <div className="text-center mb-14">
+        <div className="text-center mb-8 sm:mb-14">
           <h2 className="text-2xl sm:text-3xl font-bold t-text tracking-tight">
             {t("check.title")}
           </h2>

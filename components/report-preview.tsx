@@ -34,14 +34,14 @@ export function ReportPreview() {
   ];
 
   return (
-    <section className="relative py-16 px-6">
+    <section className="relative py-10 sm:py-16 px-4 sm:px-6">
       <div className="mx-auto max-w-4xl">
         <motion.div
           initial={{ opacity: 0, y: 20 }}
           whileInView={{ opacity: 1, y: 0 }}
           viewport={{ once: true, amount: 0.3 }}
           transition={{ duration: 0.6 }}
-          className="text-center mb-10"
+          className="text-center mb-6 sm:mb-10"
         >
           <h2 className="text-2xl sm:text-3xl font-bold t-text tracking-tight">
             {t("preview.title")}
@@ -64,7 +64,7 @@ export function ReportPreview() {
                 <div className="h-2.5 w-2.5 rounded-full t-surface-10" />
                 <div className="h-2.5 w-2.5 rounded-full t-surface-10" />
               </div>
-              <div className="ml-3 flex-1 rounded-md t-surface-4 px-3 py-1 text-xs t-text-muted font-mono">
+              <div className="ml-3 flex-1 min-w-0 rounded-md t-surface-4 px-3 py-1 text-xs t-text-muted font-mono truncate">
                 aireadinessaudit.dev/scan?url=example.com
               </div>
             </div>

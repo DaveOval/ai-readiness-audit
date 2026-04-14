@@ -75,7 +75,7 @@ export function ScanAnimation({ url, progress, currentPhase }: ScanAnimationProp
           </div>
         </div>
 
-        <div className="relative p-8 min-h-[280px] overflow-hidden">
+        <div className="relative p-4 sm:p-8 min-h-[240px] sm:min-h-[280px] overflow-hidden">
           <div className="absolute inset-0 overflow-hidden pointer-events-none">
             <motion.div
               className="absolute top-0 bottom-0 w-[2px]"
@@ -114,7 +114,7 @@ export function ScanAnimation({ url, progress, currentPhase }: ScanAnimationProp
                   className={`absolute ${getNodePosition(i)}`}
                 >
                   <div
-                    className={`flex items-center gap-2 rounded-lg px-3 py-1.5 text-xs font-medium border transition-all ${
+                    className={`flex items-center gap-1.5 sm:gap-2 rounded-lg px-2 py-1 sm:px-3 sm:py-1.5 text-[10px] sm:text-xs font-medium border transition-all max-w-[45vw] sm:max-w-none ${
                       isDone
                         ? "bg-emerald-500/10 border-emerald-500/20 text-emerald-400"
                         : isActive
@@ -158,8 +158,8 @@ export function ScanAnimation({ url, progress, currentPhase }: ScanAnimationProp
           />
         </div>
 
-        <div className="flex items-center justify-between text-sm">
-          <span className="t-text-tertiary">
+        <div className="flex items-center justify-between gap-2 text-sm">
+          <span className="t-text-tertiary min-w-0 truncate">
             {currentPhase < phases.length ? phases[currentPhase].label : t("scan.complete")}
           </span>
           <span className="font-mono t-text-secondary tabular-nums">
@@ -203,12 +203,12 @@ export function ScanAnimation({ url, progress, currentPhase }: ScanAnimationProp
 
 function getNodePosition(index: number): string {
   const positions = [
-    "top-4 right-4",
-    "top-12 left-4",
-    "top-[5.5rem] right-8",
-    "bottom-20 left-6",
-    "bottom-12 right-4",
-    "bottom-4 left-12",
+    "top-2 right-2 sm:top-4 sm:right-4",
+    "top-10 left-2 sm:top-12 sm:left-4",
+    "top-[4.5rem] right-4 sm:top-[5.5rem] sm:right-8",
+    "bottom-16 left-2 sm:bottom-20 sm:left-6",
+    "bottom-8 right-2 sm:bottom-12 sm:right-4",
+    "bottom-2 left-6 sm:bottom-4 sm:left-12",
   ];
-  return positions[index] || "top-4 left-4";
+  return positions[index] || "top-2 left-2 sm:top-4 sm:left-4";
 }

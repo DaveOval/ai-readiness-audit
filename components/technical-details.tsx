@@ -47,10 +47,10 @@ export function TechnicalDetails({ findings }: TechnicalDetailsProps) {
     >
       <button
         onClick={() => setIsOpen(!isOpen)}
-        className="w-full flex items-center justify-between p-6 text-left hover:t-surface-2 transition-colors"
+        className="w-full flex items-center justify-between gap-4 p-4 sm:p-6 text-left hover:t-surface-2 transition-colors"
         aria-expanded={isOpen}
       >
-        <div>
+        <div className="min-w-0 flex-1">
           <h3 className="text-base font-semibold t-text">{t("report.detected")}</h3>
           <p className="text-sm t-text-tertiary mt-0.5">
             {findings.length} {t("report.checks")} &middot;{" "}
@@ -72,7 +72,7 @@ export function TechnicalDetails({ findings }: TechnicalDetailsProps) {
             transition={{ duration: 0.3 }}
             className="overflow-hidden"
           >
-            <div className="px-6 pb-6 space-y-6 border-t t-border-6 pt-4">
+            <div className="px-4 sm:px-6 pb-4 sm:pb-6 space-y-6 border-t t-border-6 pt-4">
               {categoryOrder.map((key) => {
                 const items = grouped[key];
                 if (!items || items.length === 0) return null;

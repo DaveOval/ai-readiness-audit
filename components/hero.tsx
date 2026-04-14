@@ -8,10 +8,10 @@ export function Hero() {
   const { t } = useI18n();
 
   return (
-    <section id="top" className="relative flex min-h-[90vh] flex-col items-center justify-center px-6 pt-24 pb-16">
+    <section id="top" className="relative flex min-h-[70vh] sm:min-h-[90vh] flex-col items-center justify-center px-4 sm:px-6 pt-20 sm:pt-24 pb-10 sm:pb-16">
       <div
         aria-hidden
-        className="pointer-events-none absolute top-1/3 left-1/2 -translate-x-1/2 -translate-y-1/2 h-[500px] w-[700px] rounded-full opacity-30"
+        className="pointer-events-none absolute top-1/3 left-1/2 -translate-x-1/2 -translate-y-1/2 h-[500px] w-[90vw] max-w-[700px] rounded-full opacity-30"
         style={{
           background:
             "radial-gradient(ellipse, oklch(0.5 0.2 265 / 0.4), transparent 70%)",
@@ -37,7 +37,7 @@ export function Hero() {
           </span>
         </h1>
 
-        <p className="mt-6 text-lg t-text-secondary max-w-xl mx-auto leading-relaxed">
+        <p className="mt-6 text-base sm:text-lg t-text-secondary max-w-xl mx-auto leading-relaxed">
           {t("hero.subtitle")}
         </p>
 
@@ -45,7 +45,7 @@ export function Hero() {
           initial={{ opacity: 0, y: 10 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.5, delay: 0.2 }}
-          className="mt-10 max-w-xl mx-auto"
+          className="mt-6 sm:mt-10 max-w-xl mx-auto"
         >
           <UrlInput size="large" />
         </motion.div>

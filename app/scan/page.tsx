@@ -111,7 +111,7 @@ function ScanContent() {
 
   if (!url) {
     return (
-      <div className="flex-1 flex flex-col items-center justify-center px-6 py-20">
+      <div className="flex-1 flex flex-col items-center justify-center px-4 sm:px-6 py-12 sm:py-20">
         <div className="text-center space-y-4 max-w-md">
           <h1 className="text-2xl font-bold t-text">{t("scan.noUrl")}</h1>
           <p className="t-text-tertiary">{t("scan.noUrlDesc")}</p>
@@ -122,7 +122,7 @@ function ScanContent() {
   }
 
   return (
-    <div className="flex-1 flex flex-col items-center px-6 pt-28 pb-16">
+    <div className="flex-1 flex flex-col items-center px-4 sm:px-6 pt-20 sm:pt-28 pb-10 sm:pb-16">
       <AnimatePresence mode="wait">
         {state === "scanning" && (
           <motion.div
@@ -133,7 +133,7 @@ function ScanContent() {
             transition={{ duration: 0.4 }}
             className="w-full max-w-2xl"
           >
-            <div className="text-center mb-10">
+            <div className="text-center mb-6 sm:mb-10">
               <motion.h1
                 initial={{ opacity: 0, y: 10 }}
                 animate={{ opacity: 1, y: 0 }}
@@ -162,10 +162,10 @@ function ScanContent() {
             transition={{ duration: 0.6 }}
             className="w-full"
           >
-            <div className="text-center mb-10">
+            <div className="text-center mb-6 sm:mb-10">
               <Link
                 href="/"
-                className="inline-flex items-center gap-1.5 text-sm t-text-tertiary hover:opacity-70 transition-opacity mb-6"
+                className="inline-flex items-center gap-1.5 text-sm t-text-tertiary hover:opacity-70 transition-opacity mb-4 sm:mb-6"
               >
                 <ArrowLeft className="h-3.5 w-3.5" />
                 {t("scan.backHome")}

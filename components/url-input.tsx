@@ -49,8 +49,8 @@ export function UrlInput({ size = "default", className = "" }: UrlInputProps) {
             if (error) setError("");
           }}
           placeholder={t("urlInput.placeholder")}
-          className={`flex-1 bg-transparent t-text placeholder:t-text-muted outline-none ${
-            isLarge ? "px-5 py-3 text-base" : "px-4 py-2 text-sm"
+          className={`flex-1 min-w-0 bg-transparent t-text placeholder:t-text-muted outline-none ${
+            isLarge ? "px-3 py-2.5 text-sm sm:px-5 sm:py-3 sm:text-base" : "px-3 py-2 text-sm"
           }`}
           aria-label={t("urlInput.aria")}
           disabled={loading}
@@ -58,8 +58,8 @@ export function UrlInput({ size = "default", className = "" }: UrlInputProps) {
         <button
           type="submit"
           disabled={loading || !url.trim()}
-          className={`flex items-center gap-2 rounded-xl bg-gradient-to-r from-blue-500 to-indigo-600 font-medium text-white transition-all hover:from-blue-400 hover:to-indigo-500 disabled:opacity-40 disabled:cursor-not-allowed shadow-lg shadow-blue-500/20 hover:shadow-blue-500/30 ${
-            isLarge ? "px-6 py-3 text-base" : "px-4 py-2 text-sm"
+          className={`flex items-center gap-2 rounded-xl bg-gradient-to-r from-blue-500 to-indigo-600 font-medium text-white transition-all hover:from-blue-400 hover:to-indigo-500 disabled:opacity-40 disabled:cursor-not-allowed shadow-lg shadow-blue-500/20 hover:shadow-blue-500/30 shrink-0 ${
+            isLarge ? "px-4 py-2.5 text-sm sm:px-6 sm:py-3 sm:text-base" : "px-4 py-2 text-sm"
           }`}
         >
           {loading ? (

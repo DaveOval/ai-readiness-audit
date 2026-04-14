@@ -35,14 +35,14 @@ export function ContactSection() {
   }
 
   return (
-    <section id="contact" className="py-24 px-6">
+    <section id="contact" className="py-12 sm:py-24 px-4 sm:px-6">
       <div className="mx-auto max-w-2xl">
         <motion.div
           initial={{ opacity: 0, y: 20 }}
           whileInView={{ opacity: 1, y: 0 }}
           viewport={{ once: true, amount: 0.3 }}
           transition={{ duration: 0.6 }}
-          className="text-center mb-12"
+          className="text-center mb-8 sm:mb-12"
         >
           <div className="inline-flex items-center justify-center h-12 w-12 rounded-2xl bg-gradient-to-br from-blue-500/20 to-indigo-500/20 border border-blue-500/10 mb-5">
             <Mail className="h-5 w-5 text-blue-400" />
@@ -109,10 +109,10 @@ export function ContactSection() {
             />
           </div>
 
-          <div className="flex items-center justify-between gap-4 pt-1">
+          <div className="flex flex-col-reverse sm:flex-row items-center justify-between gap-3 sm:gap-4 pt-1">
             <a
               href={`mailto:${CONTACT_EMAIL}`}
-              className="text-xs t-text-tertiary hover:text-blue-400 transition-colors"
+              className="text-xs t-text-tertiary hover:text-blue-400 transition-colors truncate max-w-full"
             >
               {CONTACT_EMAIL}
             </a>
@@ -120,7 +120,7 @@ export function ContactSection() {
             <button
               type="submit"
               disabled={status === "sending" || !name.trim() || !email.trim() || !message.trim()}
-              className="flex items-center gap-2 rounded-xl bg-gradient-to-r from-blue-500 to-indigo-600 px-6 py-2.5 text-sm font-medium text-white transition-all hover:from-blue-400 hover:to-indigo-500 disabled:opacity-40 disabled:cursor-not-allowed shadow-lg shadow-blue-500/20"
+              className="flex items-center justify-center gap-2 rounded-xl bg-gradient-to-r from-blue-500 to-indigo-600 px-6 py-2.5 text-sm font-medium text-white transition-all hover:from-blue-400 hover:to-indigo-500 disabled:opacity-40 disabled:cursor-not-allowed shadow-lg shadow-blue-500/20 w-full sm:w-auto"
             >
               {status === "sending" ? (
                 t("contact.sending")

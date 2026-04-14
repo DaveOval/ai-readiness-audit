@@ -13,10 +13,60 @@ const geistMono = Geist_Mono({
   subsets: ["latin"],
 });
 
+const SITE_URL = "https://ai-readiness-audit-gamma.vercel.app";
+const SITE_NAME = "AI Readiness Audit";
+const SITE_DESCRIPTION =
+  "Paste any URL and get an instant audit of how search engines and AI systems see your content. 30+ checks across 6 categories.";
+
 export const metadata: Metadata = {
-  title: "AI Readiness Audit — Is Your Website Ready for the AI Era?",
-  description:
-    "Paste any URL and get an instant audit of how search engines and AI systems see your content. 30+ checks across 6 categories.",
+  metadataBase: new URL(SITE_URL),
+  title: {
+    default: "AI Readiness Audit — Is Your Website Ready for the AI Era?",
+    template: "%s | AI Readiness Audit",
+  },
+  description: SITE_DESCRIPTION,
+  keywords: [
+    "AI readiness",
+    "SEO audit",
+    "website audit",
+    "AI search",
+    "structured data",
+    "schema.org",
+    "JSON-LD",
+    "ChatGPT",
+    "Perplexity",
+    "Google AI",
+    "website optimization",
+  ],
+  authors: [{ name: "David Vazquez" }],
+  creator: "David Vazquez",
+  openGraph: {
+    type: "website",
+    locale: "en_US",
+    url: SITE_URL,
+    siteName: SITE_NAME,
+    title: "AI Readiness Audit — Is Your Website Ready for the AI Era?",
+    description: SITE_DESCRIPTION,
+  },
+  twitter: {
+    card: "summary_large_image",
+    title: "AI Readiness Audit — Is Your Website Ready for the AI Era?",
+    description: SITE_DESCRIPTION,
+  },
+  robots: {
+    index: true,
+    follow: true,
+    googleBot: {
+      index: true,
+      follow: true,
+      "max-video-preview": -1,
+      "max-image-preview": "large",
+      "max-snippet": -1,
+    },
+  },
+  alternates: {
+    canonical: SITE_URL,
+  },
 };
 
 export default function RootLayout({

@@ -5,10 +5,12 @@ import { ReportPreview } from "@/components/report-preview";
 import { StatsStrip } from "@/components/stats-strip";
 import { ContactSection } from "@/components/contact-section";
 import { Footer } from "@/components/footer";
+import { JsonLd } from "@/components/json-ld";
 
 export default function Home() {
   return (
     <>
+      <JsonLd />
       <Navbar />
       <main className="flex-1">
         <Hero />

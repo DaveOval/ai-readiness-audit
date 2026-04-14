@@ -14,7 +14,7 @@ export function Navbar() {
       <div className="mx-auto flex h-16 max-w-6xl items-center justify-between px-6">
         <Link href="/" className="flex items-center gap-2.5 group">
           <div className="flex h-8 w-8 items-center justify-center rounded-lg bg-gradient-to-br from-blue-500 to-indigo-600 shadow-lg shadow-blue-500/20">
-            <Activity className="h-4 w-4 text-white" />
+            <Activity className="h-4 w-4 text-white" aria-hidden="true" />
           </div>
           <span className="text-[15px] font-semibold tracking-tight t-text-primary group-hover:opacity-100 transition-opacity">
             {t("nav.brand")}
@@ -40,7 +40,7 @@ export function Navbar() {
             className="flex items-center gap-1.5 rounded-lg t-surface-6 px-2.5 py-1.5 text-xs font-medium t-text-secondary hover:t-surface-10 t-border-8 border transition-all"
             aria-label="Toggle language"
           >
-            <Languages className="h-3.5 w-3.5" />
+            <Languages className="h-3.5 w-3.5" aria-hidden="true" />
             <span className="uppercase">{locale}</span>
           </button>
 
@@ -51,9 +51,9 @@ export function Navbar() {
             aria-label="Toggle theme"
           >
             {theme === "dark" ? (
-              <Sun className="h-4 w-4" />
+              <Sun className="h-4 w-4" aria-hidden="true" />
             ) : (
-              <Moon className="h-4 w-4" />
+              <Moon className="h-4 w-4" aria-hidden="true" />
             )}
           </button>
 

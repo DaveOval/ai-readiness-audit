@@ -1,38 +1,47 @@
 "use client";
 
-import { useEffect, useState } from "react";
+import { useEffect, useState, useSyncExternalStore } from "react";
 import { motion } from "framer-motion";
 import { Send, Mail, CheckCircle2 } from "lucide-react";
 import { useI18n } from "@/lib/i18n";
+import { SITE_URL } from "@/lib/site";
 
 const CONTACT_EMAIL = "dave_u@outlook.com";
-const FORMSPREE_FORM_ID = "xgoryzar";
+const FORMSPREE_FORM_ID = "mwkdpyzj";
 const FORMSPREE_ENDPOINT = `https://formspree.io/f/${FORMSPREE_FORM_ID}`;
+const NEXT_URL = `${SITE_URL}/?sent=1#contact`;
+
+const subscribeToHistory = (cb: () => void) => {
+  window.addEventListener("popstate", cb);
+  return () => window.removeEventListener("popstate", cb);
+};
+const getSentFromUrl = () =>
+  new URLSearchParams(window.location.search).get("sent") === "1";
+const getSentSsr = () => false;
 
 export function ContactSection() {
   const { t } = useI18n();
   const [name, setName] = useState("");
   const [email, setEmail] = useState("");
   const [message, setMessage] = useState("");
-  const [status, setStatus] = useState<"idle" | "sending" | "sent">(() => {
-    if (typeof window === "undefined") return "idle";
-    return new URLSearchParams(window.location.search).get("sent") === "1"
-      ? "sent"
-      : "idle";
-  });
-  const [nextUrl] = useState<string>(() =>
-    typeof window === "undefined" ? "" : `${window.location.origin}/?sent=1#contact`,
+  const [submitting, setSubmitting] = useState(false);
+  const sentFromUrl = useSyncExternalStore(
+    subscribeToHistory,
+    getSentFromUrl,
+    getSentSsr,
   );
 
   useEffect(() => {
-    if (typeof window === "undefined") return;
+    if (!sentFromUrl) return;
     const params = new URLSearchParams(window.location.search);
-    if (params.get("sent") !== "1") return;
     params.delete("sent");
     const qs = params.toString();
     const cleanUrl = `${window.location.pathname}${qs ? `?${qs}` : ""}#contact`;
     window.history.replaceState({}, "", cleanUrl);
-  }, []);
+    window.dispatchEvent(new PopStateEvent("popstate"));
+  }, [sentFromUrl]);
+
+  const isSent = sentFromUrl;
 
   return (
     <section id="contact" className="py-12 sm:py-24 px-4 sm:px-6">
@@ -55,7 +64,7 @@ export function ContactSection() {
           </p>
         </motion.div>
 
-        {status === "sent" ? (
+        {isSent ? (
           <motion.div
             initial={{ opacity: 0, y: 10 }}
             animate={{ opacity: 1, y: 0 }}
@@ -74,10 +83,10 @@ export function ContactSection() {
             transition={{ duration: 0.6, delay: 0.15 }}
             action={FORMSPREE_ENDPOINT}
             method="POST"
-            onSubmit={() => setStatus("sending")}
+            onSubmit={() => setSubmitting(true)}
             className="rounded-2xl t-card p-6 sm:p-8 space-y-5"
           >
-            {nextUrl && <input type="hidden" name="_next" value={nextUrl} />}
+            <input type="hidden" name="_next" value={NEXT_URL} />
             <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
               <div>
                 <label htmlFor="contact-name" className="block text-sm font-medium t-text-secondary mb-1.5">
@@ -93,7 +102,7 @@ export function ContactSection() {
                   onChange={(e) => setName(e.target.value)}
                   placeholder={t("contact.namePlaceholder")}
                   className="w-full rounded-xl t-input px-4 py-2.5 text-sm t-text placeholder:t-text-muted outline-none focus:border-blue-500/40 transition-colors"
-                  disabled={status === "sending"}
+                  disabled={submitting}
                 />
               </div>
               <div>
@@ -110,7 +119,7 @@ export function ContactSection() {
                   onChange={(e) => setEmail(e.target.value)}
                   placeholder={t("contact.emailPlaceholder")}
                   className="w-full rounded-xl t-input px-4 py-2.5 text-sm t-text placeholder:t-text-muted outline-none focus:border-blue-500/40 transition-colors"
-                  disabled={status === "sending"}
+                  disabled={submitting}
                 />
               </div>
             </div>
@@ -128,7 +137,7 @@ export function ContactSection() {
                 onChange={(e) => setMessage(e.target.value)}
                 placeholder={t("contact.messagePlaceholder")}
                 className="w-full rounded-xl t-input px-4 py-2.5 text-sm t-text placeholder:t-text-muted outline-none resize-none focus:border-blue-500/40 transition-colors"
-                disabled={status === "sending"}
+                disabled={submitting}
               />
             </div>
 
@@ -142,10 +151,10 @@ export function ContactSection() {
 
               <button
                 type="submit"
-                disabled={status === "sending" || !name.trim() || !email.trim() || !message.trim()}
+                disabled={submitting || !name.trim() || !email.trim() || !message.trim()}
                 className="flex items-center justify-center gap-2 rounded-xl bg-gradient-to-r from-blue-500 to-indigo-600 px-6 py-2.5 text-sm font-medium text-white transition-all hover:from-blue-400 hover:to-indigo-500 disabled:opacity-40 disabled:cursor-not-allowed shadow-lg shadow-blue-500/20 w-full sm:w-auto"
               >
-                {status === "sending" ? (
+                {submitting ? (
                   t("contact.sending")
                 ) : (
                   <>

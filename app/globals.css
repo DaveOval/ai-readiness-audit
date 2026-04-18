@@ -169,6 +169,19 @@
   .t-text-secondary { color: rgb(var(--th-text) / 0.5); }
   .t-text-tertiary { color: rgb(var(--th-text) / 0.35); }
   .t-text-muted { color: rgb(var(--th-text) / 0.25); }
+
+  /* Light theme needs higher opacities so dark text remains legible on bright surfaces */
+  .light .t-text-secondary { color: rgb(var(--th-text) / 0.7); }
+  .light .t-text-tertiary { color: rgb(var(--th-text) / 0.55); }
+  .light .t-text-muted { color: rgb(var(--th-text) / 0.45); }
+
+  .light .t-border-6 { border-color: rgb(var(--th-surface) / 0.1); }
+  .light .t-border-8 { border-color: rgb(var(--th-surface) / 0.12); }
+  .light .t-border-10 { border-color: rgb(var(--th-surface) / 0.16); }
+  .light .t-card { border-color: rgb(var(--th-surface) / 0.1); background-color: rgb(var(--th-surface) / 0.03); }
+  .light .t-card-hover:hover { border-color: rgb(var(--th-surface) / 0.16); background-color: rgb(var(--th-surface) / 0.05); }
+  .light .t-input { border-color: rgb(var(--th-surface) / 0.14); background-color: rgb(var(--th-surface) / 0.04); }
+  .light .t-navbar { border-bottom-color: rgb(var(--th-surface) / 0.1); }
   .t-bg { background-color: rgb(var(--th-bg)); }
   .t-surface-2 { background-color: rgb(var(--th-surface) / 0.02); }
   .t-surface-3 { background-color: rgb(var(--th-surface) / 0.03); }

@@ -2,10 +2,11 @@
 
 import { useState } from "react";
 import Link from "next/link";
-import { Activity, Sun, Moon, Languages, Menu, X } from "lucide-react";
+import { Sun, Moon, Languages, Menu, X } from "lucide-react";
 import { motion, AnimatePresence } from "framer-motion";
 import { useTheme } from "@/lib/theme";
 import { useI18n } from "@/lib/i18n";
+import { BrandMark } from "./brand-mark";
 
 export function Navbar() {
   const { theme, toggleTheme } = useTheme();
@@ -17,7 +18,7 @@ export function Navbar() {
       <div className="mx-auto flex h-16 max-w-6xl items-center justify-between px-6">
         <Link href="/" className="flex items-center gap-2.5 group">
           <div className="flex h-8 w-8 items-center justify-center rounded-lg bg-gradient-to-br from-blue-500 to-indigo-600 shadow-lg shadow-blue-500/20">
-            <Activity className="h-4 w-4 text-white" aria-hidden="true" />
+            <BrandMark className="h-5 w-5 text-white" />
           </div>
           <span className="text-[15px] font-semibold tracking-tight t-text-primary group-hover:opacity-100 transition-opacity">
             {t("nav.brand")}

@@ -65,7 +65,7 @@ export function ReportPreview() {
                 <div className="h-2.5 w-2.5 rounded-full t-surface-10" />
               </div>
               <div className="ml-3 flex-1 min-w-0 rounded-md t-surface-4 px-3 py-1 text-xs t-text-muted font-mono truncate">
-                aireadinessaudit.dev/scan?url=example.com
+                ai-readiness-audit-gamma.vercel.app/scan?url=example.com
               </div>
             </div>
 

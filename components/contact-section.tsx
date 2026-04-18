@@ -74,6 +74,7 @@ export function ContactSection() {
                 required
                 value={name}
                 onChange={(e) => setName(e.target.value)}
+                placeholder={t("contact.namePlaceholder")}
                 className="w-full rounded-xl t-input px-4 py-2.5 text-sm t-text placeholder:t-text-muted outline-none focus:border-blue-500/40 transition-colors"
                 disabled={status === "sending"}
               />
@@ -88,6 +89,7 @@ export function ContactSection() {
                 required
                 value={email}
                 onChange={(e) => setEmail(e.target.value)}
+                placeholder={t("contact.emailPlaceholder")}
                 className="w-full rounded-xl t-input px-4 py-2.5 text-sm t-text placeholder:t-text-muted outline-none focus:border-blue-500/40 transition-colors"
                 disabled={status === "sending"}
               />
@@ -104,6 +106,7 @@ export function ContactSection() {
               rows={4}
               value={message}
               onChange={(e) => setMessage(e.target.value)}
+              placeholder={t("contact.messagePlaceholder")}
               className="w-full rounded-xl t-input px-4 py-2.5 text-sm t-text placeholder:t-text-muted outline-none resize-none focus:border-blue-500/40 transition-colors"
               disabled={status === "sending"}
             />

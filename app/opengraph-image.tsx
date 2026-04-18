@@ -42,19 +42,28 @@ export default function OGImage() {
         >
           <div
             style={{
-              width: 56,
-              height: 56,
-              borderRadius: 14,
+              width: 64,
+              height: 64,
+              borderRadius: 16,
               background: "linear-gradient(135deg, #4F46E5, #7C3AED)",
               display: "flex",
               alignItems: "center",
               justifyContent: "center",
-              fontSize: 28,
-              fontWeight: 900,
-              color: "white",
             }}
           >
-            AI
+            <svg
+              xmlns="http://www.w3.org/2000/svg"
+              viewBox="0 0 32 32"
+              width="42"
+              height="42"
+              fill="none"
+            >
+              <path
+                d="M16 6L8 26h4l2-5h4l2 5h4L16 6zm0 8l2 5h-4l2-5z"
+                fill="white"
+              />
+              <circle cx="24" cy="8" r="3" fill="white" opacity="0.7" />
+            </svg>
           </div>
           <div
             style={{

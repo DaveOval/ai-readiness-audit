@@ -1,7 +1,7 @@
 "use client";
 
-import { Activity } from "lucide-react";
 import { useI18n } from "@/lib/i18n";
+import { BrandMark } from "./brand-mark";
 
 export function Footer() {
   const { t } = useI18n();
@@ -9,8 +9,10 @@ export function Footer() {
   return (
     <footer className="border-t t-border-6 py-6 sm:py-10 px-4 sm:px-6 mt-auto">
       <div className="mx-auto max-w-6xl flex flex-col sm:flex-row items-center justify-between gap-4">
-        <div className="flex items-center gap-2 t-text-tertiary">
-          <Activity className="h-4 w-4" aria-hidden="true" />
+        <div className="flex items-center gap-2 t-text-secondary">
+          <span className="flex h-6 w-6 items-center justify-center rounded-md bg-gradient-to-br from-blue-500 to-indigo-600 shadow shadow-blue-500/20">
+            <BrandMark className="h-4 w-4 text-white" />
+          </span>
           <span className="text-sm font-medium">{t("nav.brand")}</span>
         </div>
         <div className="flex flex-wrap items-center justify-center gap-x-4 gap-y-1 text-xs t-text-muted">

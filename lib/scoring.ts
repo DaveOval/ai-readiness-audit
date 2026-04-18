@@ -141,6 +141,31 @@ const FIX_MAP: Record<string, { title: string; description: string }> = {
     description:
       "Include lists, blockquotes, and definition terms to make your content easier for AI to cite directly.",
   },
+  HTTPS: {
+    title: "Serve the page over HTTPS",
+    description:
+      "Install a TLS certificate (free via Let's Encrypt or your host) and redirect all HTTP traffic to HTTPS. AI crawlers and modern browsers distrust or block insecure pages.",
+  },
+  "Page speed": {
+    title: "Improve server response time",
+    description:
+      "Aim for a Time to First Byte under 800ms. Add caching, a CDN, and optimize server-side rendering. Slow pages risk timing out before AI crawlers finish fetching them.",
+  },
+  "Image alt text": {
+    title: "Add descriptive alt text to images",
+    description:
+      "Every meaningful <img> should have an alt attribute describing what is shown. AI systems and screen readers use alt text to understand visual content; decorative images should use alt=\"\".",
+  },
+  "AI crawler access": {
+    title: "Allow AI crawlers in robots.txt",
+    description:
+      "Add explicit User-agent rules in robots.txt for GPTBot, ClaudeBot, PerplexityBot, Google-Extended, and Applebot-Extended. Blocking them removes your content from AI search results and citations.",
+  },
+  "llms.txt present": {
+    title: "Create an llms.txt file",
+    description:
+      "Add a Markdown-formatted /llms.txt at your site root with a one-line site description, links to your most important pages, and an About section (Type, Category, Audience). It is the 2026 standard for guiding AI crawlers and significantly increases citation rates.",
+  },
 };
 
 export function generateIssues(findings: Finding[]): Issue[] {

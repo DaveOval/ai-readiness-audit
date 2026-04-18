@@ -7,6 +7,7 @@ interface RawAuditData {
   html: string;
   robotsTxt: string | null;
   sitemapXml: string | null;
+  llmsTxt: string | null;
   responseTimeMs: number;
 }
 
@@ -38,9 +39,10 @@ export async function fetchPage(url: string): Promise<RawAuditData> {
   const responseTimeMs = Date.now() - start;
 
   const origin = new URL(url).origin;
-  const [robotsTxt, sitemapXml] = await Promise.all([
+  const [robotsTxt, sitemapXml, llmsTxt] = await Promise.all([
     fetchOptional(`${origin}/robots.txt`),
     fetchOptional(`${origin}/sitemap.xml`),
+    fetchOptional(`${origin}/llms.txt`),
   ]);
 
   return {
@@ -48,6 +50,7 @@ export async function fetchPage(url: string): Promise<RawAuditData> {
     html,
     robotsTxt,
     sitemapXml,
+    llmsTxt,
     responseTimeMs,
   };
 }
@@ -61,6 +64,34 @@ export function runChecks(data: RawAuditData, url: string): Finding[] {
   }
 
   // ── TECHNICAL ─────────────────────────────────────────────────────
+  const isHttps = url.toLowerCase().startsWith("https://");
+  add({
+    name: "HTTPS",
+    passed: isHttps,
+    value: isHttps,
+    detail: isHttps
+      ? "Page is served over HTTPS"
+      : "Page is not served over HTTPS — AI crawlers and browsers may distrust or block it",
+    category: "technical",
+    weight: 3,
+  });
+
+  const speedMs = data.responseTimeMs;
+  const speedPassed = speedMs > 0 && speedMs < 2000;
+  add({
+    name: "Page speed",
+    passed: speedPassed,
+    value: speedMs,
+    detail:
+      speedMs < 800
+        ? `Fast response: ${speedMs}ms — well under the 800ms target`
+        : speedMs < 2000
+          ? `Acceptable response: ${speedMs}ms — aim for under 800ms for best results`
+          : `Slow response: ${speedMs}ms — AI crawlers may time out before fetching this page`,
+    category: "technical",
+    weight: speedMs >= 2000 ? 2 : 1,
+  });
+
   add({
     name: "HTTP Status",
     passed: data.statusCode >= 200 && data.statusCode < 400,
@@ -184,6 +215,56 @@ export function runChecks(data: RawAuditData, url: string): Finding[] {
     category: "discoverability",
   });
 
+  const aiCrawlers = [
+    "GPTBot",
+    "OAI-SearchBot",
+    "ChatGPT-User",
+    "ClaudeBot",
+    "anthropic-ai",
+    "PerplexityBot",
+    "Google-Extended",
+    "Applebot-Extended",
+    "CCBot",
+  ];
+  let aiCrawlersAllowed = true;
+  let aiCrawlerDetail = "robots.txt missing — AI crawlers default to allowed but explicit rules are recommended";
+  if (data.robotsTxt) {
+    const lower = data.robotsTxt.toLowerCase();
+    const blockedBots: string[] = [];
+    for (const bot of aiCrawlers) {
+      const re = new RegExp(
+        `user-agent:\\s*${bot.toLowerCase()}[\\s\\S]*?(?=user-agent:|$)`,
+        "i"
+      );
+      const match = lower.match(re);
+      if (match && /disallow:\s*\//i.test(match[0]) && !/allow:\s*\//i.test(match[0])) {
+        blockedBots.push(bot);
+      }
+    }
+    const wildcardBlocks =
+      /user-agent:\s*\*[\s\S]*?disallow:\s*\/\s*(\n|$)/i.test(lower) &&
+      !aiCrawlers.some((b) =>
+        new RegExp(`user-agent:\\s*${b.toLowerCase()}`, "i").test(lower)
+      );
+    if (blockedBots.length > 0) {
+      aiCrawlersAllowed = false;
+      aiCrawlerDetail = `Blocked AI crawler${blockedBots.length > 1 ? "s" : ""}: ${blockedBots.join(", ")}`;
+    } else if (wildcardBlocks) {
+      aiCrawlersAllowed = false;
+      aiCrawlerDetail = "robots.txt blocks all crawlers via wildcard with no AI-specific allow rules";
+    } else {
+      aiCrawlerDetail = "AI crawlers (GPTBot, ClaudeBot, PerplexityBot, etc.) are not blocked";
+    }
+  }
+  add({
+    name: "AI crawler access",
+    passed: aiCrawlersAllowed,
+    value: aiCrawlersAllowed,
+    detail: aiCrawlerDetail,
+    category: "discoverability",
+    weight: 2,
+  });
+
   // ── SOCIAL / SHARING ──────────────────────────────────────────────
   const ogTitle = $('meta[property="og:title"]').attr("content");
   add({
@@ -292,6 +373,29 @@ export function runChecks(data: RawAuditData, url: string): Finding[] {
     category: "content",
   });
 
+  const allImages = $("img");
+  const totalImages = allImages.length;
+  const imagesWithAlt = allImages.filter(function () {
+    const alt = $(this).attr("alt");
+    return typeof alt === "string" && alt.trim().length > 0;
+  }).length;
+  const altCoverage = totalImages > 0 ? imagesWithAlt / totalImages : 1;
+  add({
+    name: "Image alt text",
+    passed: totalImages === 0 || altCoverage >= 0.8,
+    value:
+      totalImages === 0
+        ? "no images"
+        : `${imagesWithAlt}/${totalImages} (${Math.round(altCoverage * 100)}%)`,
+    detail:
+      totalImages === 0
+        ? "No images on the page — nothing to describe"
+        : altCoverage >= 0.8
+          ? `${imagesWithAlt} of ${totalImages} images have alt text (${Math.round(altCoverage * 100)}%)`
+          : `Only ${imagesWithAlt} of ${totalImages} images have alt text — AI systems and screen readers cannot describe the rest`,
+    category: "content",
+  });
+
   const paragraphs = $("p");
   const avgSentenceLen =
     paragraphs.length > 0
@@ -390,6 +494,18 @@ export function runChecks(data: RawAuditData, url: string): Finding[] {
   });
 
   // ── AI READINESS ──────────────────────────────────────────────────
+  const hasLlmsTxt = data.llmsTxt !== null && data.llmsTxt.trim().length > 0;
+  add({
+    name: "llms.txt present",
+    passed: hasLlmsTxt,
+    value: hasLlmsTxt,
+    detail: hasLlmsTxt
+      ? `llms.txt found at /llms.txt (${data.llmsTxt!.length} chars) — AI crawlers have a structured site introduction`
+      : "No /llms.txt file found — AI crawlers must guess your site's purpose and key content",
+    category: "aiReadiness",
+    weight: 2,
+  });
+
   const firstParagraph = $("p").first().text().trim();
   const startsWithAnswer =
     firstParagraph.length > 20 &&

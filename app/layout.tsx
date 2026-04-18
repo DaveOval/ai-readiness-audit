@@ -1,6 +1,7 @@
 import type { Metadata } from "next";
 import { Geist, Geist_Mono } from "next/font/google";
 import { Providers } from "@/lib/providers";
+import { SITE_URL } from "@/lib/site";
 import "./globals.css";
 
 const geistSans = Geist({
@@ -13,7 +14,6 @@ const geistMono = Geist_Mono({
   subsets: ["latin"],
 });
 
-const SITE_URL = "https://ai-readiness-audit-gamma.vercel.app";
 const SITE_NAME = "AI Readiness Audit";
 const SITE_DESCRIPTION =
   "Paste any URL and get an instant audit of how search engines and AI systems see your content. 30+ checks across 6 categories.";

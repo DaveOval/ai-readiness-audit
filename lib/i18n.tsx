@@ -133,7 +133,7 @@ const translations = {
     "nav.contact": "Contact",
 
     // Footer
-    "footer.madeBy": "Made by David Vazquez",
+    "footer.madeBy": "Made by",
 
     // Theme
     "theme.light": "Light",
@@ -263,7 +263,7 @@ const translations = {
     "nav.contact": "Contacto",
 
     // Footer
-    "footer.madeBy": "Hecho por David Vazquez",
+    "footer.madeBy": "Hecho por",
 
     // Theme
     "theme.light": "Claro",

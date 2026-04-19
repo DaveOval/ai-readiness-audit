@@ -16,7 +16,17 @@ export function Footer() {
           <span className="text-sm font-medium">{t("nav.brand")}</span>
         </div>
         <div className="flex flex-wrap items-center justify-center gap-x-4 gap-y-1 text-xs t-text-muted">
-          <span>{t("footer.madeBy")}</span>
+          <span>
+            {t("footer.madeBy")}{" "}
+            <a
+              href="https://www.daveoval.com/"
+              target="_blank"
+              rel="noopener noreferrer"
+              className="font-medium t-text-secondary hover:text-blue-400 transition-colors"
+            >
+              David Vazquez
+            </a>
+          </span>
           <span className="hidden sm:inline">&middot;</span>
           <span>{t("footer.builtWith")}</span>
           <span className="hidden sm:inline">&middot;</span>

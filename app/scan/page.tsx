@@ -10,11 +10,16 @@ import { ReportSummary } from "@/components/report-summary";
 import { UrlInput } from "@/components/url-input";
 import { Navbar } from "@/components/navbar";
 import { Footer } from "@/components/footer";
+import { PostAuditHelpModal } from "@/components/post-audit-help-modal";
 import { useI18n } from "@/lib/i18n";
 import type { AuditResponse } from "@/lib/types";
 import { SCAN_PHASES, MIN_SCAN_DISPLAY_MS } from "@/lib/constants";
 
 type ScanState = "scanning" | "complete" | "error";
+
+const HELP_MODAL_SESSION_KEY = "aireadiness-post-audit-help";
+const HELP_MODAL_DELAY_MS = 600;
+const HELP_MODAL_REOPEN_INTERVAL_MS = 5 * 60 * 1000;
 
 function ScanContent() {
   const searchParams = useSearchParams();
@@ -29,6 +34,45 @@ function ScanContent() {
 
   const resultReadyRef = useRef<AuditResponse | null>(null);
   const animationDoneRef = useRef(false);
+
+  const [helpModalOpen, setHelpModalOpen] = useState(false);
+
+  useEffect(() => {
+    if (state !== "complete" || !result) return;
+    if (typeof window === "undefined") return;
+    try {
+      if (window.sessionStorage.getItem(HELP_MODAL_SESSION_KEY) === "1") return;
+    } catch {
+      // sessionStorage may be unavailable (e.g. privacy mode); fall through and show once.
+    }
+
+    const timer = window.setTimeout(() => {
+      setHelpModalOpen(true);
+      try {
+        window.sessionStorage.setItem(HELP_MODAL_SESSION_KEY, "1");
+      } catch {
+        // ignore storage errors
+      }
+    }, HELP_MODAL_DELAY_MS);
+
+    return () => window.clearTimeout(timer);
+  }, [state, result]);
+
+  useEffect(() => {
+    if (typeof window === "undefined") return;
+    if (state !== "complete" || !result) return;
+
+    const interval = window.setInterval(() => {
+      try {
+        window.sessionStorage.removeItem(HELP_MODAL_SESSION_KEY);
+      } catch {
+        // ignore storage errors
+      }
+      setHelpModalOpen((prev) => (prev ? prev : true));
+    }, HELP_MODAL_REOPEN_INTERVAL_MS);
+
+    return () => window.clearInterval(interval);
+  }, [state, result]);
 
   useEffect(() => {
     if (!url) return;
@@ -204,6 +248,11 @@ function ScanContent() {
           </motion.div>
         )}
       </AnimatePresence>
+
+      <PostAuditHelpModal
+        open={helpModalOpen}
+        onOpenChange={setHelpModalOpen}
+      />
     </div>
   );
 }

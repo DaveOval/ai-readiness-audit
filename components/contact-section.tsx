@@ -5,8 +5,8 @@ import { motion } from "framer-motion";
 import { Send, Mail, CheckCircle2 } from "lucide-react";
 import { useI18n } from "@/lib/i18n";
 import { SITE_URL } from "@/lib/site";
+import { CONTACT_EMAIL } from "@/lib/contact";
 
-const CONTACT_EMAIL = "dave_u@outlook.com";
 const FORMSPREE_FORM_ID = "mwkdpyzj";
 const FORMSPREE_ENDPOINT = `https://formspree.io/f/${FORMSPREE_FORM_ID}`;
 const NEXT_URL = `${SITE_URL}/?sent=1#contact`;

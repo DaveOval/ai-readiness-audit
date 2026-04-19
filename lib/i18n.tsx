@@ -83,6 +83,15 @@ const translations = {
     "scan.noUrlDesc": "Paste a URL below to start an AI readiness audit.",
     "scan.loading": "Loading...",
 
+    // Post-audit help modal
+    "scan.helpModal.title": "Want help improving your site?",
+    "scan.helpModal.body":
+      "I can help you act on these findings and lift your score. Reach out by email or visit my site to get started.",
+    "scan.helpModal.email": "Email me",
+    "scan.helpModal.website": "Visit my site",
+    "scan.helpModal.dismiss": "Maybe later",
+    "scan.helpModal.emailSubject": "AI Readiness Audit \u2013 I'd like help improving my site",
+
     // Scan phases
     "phase.fetchingHtml": "Fetching HTML",
     "phase.inspectingMetadata": "Inspecting metadata",
@@ -212,6 +221,15 @@ const translations = {
       "Pega una URL abajo para iniciar una auditoría de preparación para IA.",
     "scan.loading": "Cargando...",
 
+    // Post-audit help modal
+    "scan.helpModal.title": "¿Quieres ayuda para mejorar tu sitio?",
+    "scan.helpModal.body":
+      "Puedo ayudarte a aplicar estos hallazgos y subir tu puntaje. Escríbeme por correo o visita mi sitio para empezar.",
+    "scan.helpModal.email": "Mándame un correo",
+    "scan.helpModal.website": "Visita mi sitio",
+    "scan.helpModal.dismiss": "Ahora no",
+    "scan.helpModal.emailSubject": "Auditor\u00eda IA \u2013 Quiero ayuda para mejorar mi sitio",
+
     // Scan phases
     "phase.fetchingHtml": "Obteniendo HTML",
     "phase.inspectingMetadata": "Inspeccionando metadatos",
@@ -285,8 +303,23 @@ function detectLocale(): Locale {
   if (typeof window === "undefined") return "en";
   const saved = localStorage.getItem("locale");
   if (saved === "en" || saved === "es") return saved;
-  const browserLang = navigator.language.toLowerCase();
-  if (browserLang.startsWith("es")) return "es";
+
+  const candidates: string[] = [];
+  if (Array.isArray(navigator.languages)) {
+    candidates.push(...navigator.languages);
+  }
+  if (navigator.language) candidates.push(navigator.language);
+  const htmlLang =
+    typeof document !== "undefined"
+      ? document.documentElement.getAttribute("lang")
+      : null;
+  if (htmlLang) candidates.push(htmlLang);
+
+  for (const raw of candidates) {
+    const lang = raw?.toLowerCase() ?? "";
+    if (lang.startsWith("es")) return "es";
+    if (lang.startsWith("en")) return "en";
+  }
   return "en";
 }
 

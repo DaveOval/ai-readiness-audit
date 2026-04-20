@@ -1,4 +1,5 @@
 import type { Metadata } from "next";
+import { Analytics } from "@vercel/analytics/next";
 import { Geist, Geist_Mono } from "next/font/google";
 import { Providers } from "@/lib/providers";
 import { SITE_URL } from "@/lib/site";
@@ -90,6 +91,7 @@ export default function RootLayout({
       <body className="min-h-full flex flex-col relative overflow-x-hidden bg-background text-foreground transition-colors duration-300">
         <AmbientBg />
         <Providers>{children}</Providers>
+        <Analytics />
       </body>
     </html>
   );

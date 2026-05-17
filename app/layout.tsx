@@ -68,6 +68,9 @@ export const metadata: Metadata = {
   alternates: {
     canonical: SITE_URL,
   },
+  other: {
+    "lh3k-verify": "f75b376a410177b4506e3fdcea649b15",
+  },
 };
 
 export default function RootLayout({
